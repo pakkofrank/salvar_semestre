@@ -47743,6 +47743,8 @@
                             console.error(n)
                         }
                         this.modalType = e, this.modalProps = t
+
+                        console.log(t)
                     }
                 }, {
                     key: "modalHide",
@@ -50891,7 +50893,42 @@
                 function n(e) {
                     var r;
                     Object(Ut.a)(this, n), (r = t.call(this, e)).openModal = function (e) {
-                        r.props.modalStore.modalShow("HTML_CONTENT", e)
+                        let answers = [
+                            '1637354055107-istockphoto-1179132259-170667a',
+                            '1637354790810-istockphoto-1179132259-170667a',
+                            '1637354984821-istockphoto-1179132259-170667a',
+                            '1637356253299-istockphoto-1179132259-170667a',
+                            '1637357134050-istockphoto-1179132259-170667a',
+                            '1637357686359-istockphoto-1179132259-170667a',
+                            '1637358147764-istockphoto-1179132259-170667a',
+                            '1637358333772-istockphoto-1179132259-170667a',
+                            '1637358985849-istockphoto-1179132259-170667a',
+                            '1637359087448-istockphoto-1179132259-170667a'
+                        ]
+
+                        function validateAnswer() {
+                            let res = false;
+                            answers.forEach((correctAnswer) => {
+                                if (e.HtmlCode.indexOf(correctAnswer) > -1) {
+                                    res = true;
+                                }
+                            })
+                            return res;
+                        }
+
+                        r.props.modalStore.modalShow("HTML_CONTENT", e),
+                        console.log(this)
+                        console.log(e.HtmlCode)//item a generar
+                        console.log(r)
+                        console.log(validateAnswer())
+                        let next = r.getInternalIdSlideToGo('NEXT_PAGE');
+                        if (validateAnswer()) {
+                            console.log('la funcion correcta');
+                            let closeBtn = document.getElementsByClassName('icon-close')[0]; 
+                            closeBtn.addEventListener('click', () => {r.goToSlide(next);})
+                            //r.goToSlide(next);
+                        }
+                        //goToSlide recive un elemento item de la siguiente diapositiva
                     }, r.goToSlide = function (e) {
                         var t = r.props,
                             n = t.viewStore,
@@ -54693,7 +54730,7 @@
                     className: "modal-title"
                 }, i.a.createElement(Vc, null, c("social_modal_mobile.share_your_creation"))), i.a.createElement("div", {
                     className: "modal-icon-close",
-                    onClick: l
+                    onClick: 1
                 }, i.a.createElement(Ya.a, null))), i.a.createElement("div", {
                     className: "genially-view-share-modal-content"
                 }, i.a.createElement(jc, {
