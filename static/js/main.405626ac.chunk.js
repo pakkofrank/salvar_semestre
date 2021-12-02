@@ -50923,16 +50923,68 @@
                         console.log(validateAnswer())
                         let next = r.getInternalIdSlideToGo('NEXT_PAGE');
                         if (validateAnswer()) {
-                            console.log('la funcion correcta');
-                            let closeBtn = document.getElementsByClassName('icon-close')[0]; 
-                            closeBtn.addEventListener('click', () => {r.goToSlide(next);})
+                            console.log('la respuesta es correcta');
+                            addPoint();
                             //r.goToSlide(next);
                         }
+                        let closeBtn = document.getElementsByClassName('icon-close')[0]; 
+                        let overlay = document.getElementsByClassName('ReactModal__Overlay--after-open')[0];
+                        closeBtn.addEventListener('click', () => {r.goToSlide(next);})
+                        overlay.addEventListener('click', () => {r.goToSlide(next);})
                         //goToSlide recive un elemento item de la siguiente diapositiva
                     }, r.goToSlide = function (e) {
                         var t = r.props,
                             n = t.viewStore,
-                            i = t.history;
+                            i = t.history,
+                            APIUrl = 'http://deveduc.ddns.net:88/api/cursos/alumnos/calificaciones';
+                            console.log(e);
+                            console.log(t);
+                            console.log(n);
+                            console.log(i);
+
+                        async function postData(url = '', data = {}) {
+                            var myHeaders = new Headers();
+                            myHeaders.append("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Mzc5NjA0MTEsImV4cCI6MTY0MDU1MjQxMSwidXNlckRhdGEiOnsiaWQiOiIxIn19.ibbDwE-szOqq-eQTFy2V1XGQc723--vXzQiLNu5cta0");
+                            myHeaders.append("Content-Type", "application/json");
+                            myHeaders.append("Cookie", "PHPSESSID=5768enb10orcmtimk223enmna4");
+
+                            var raw = JSON.stringify(data);
+
+                            var requestOptions = {
+                            method: 'POST',
+                            headers: myHeaders,
+                            body: raw,
+                            redirect: 'follow',
+                            mode: 'cors'
+                            };
+
+                            let res = await fetch("http://deveduc.ddns.net:88/api/cursos/alumnos/calificaciones", requestOptions)
+                            return res.json();
+                             // parses JSON response into native JavaScript objects
+                          }
+
+                        function sendData() {
+                            let points = getPoints();
+                            let jsonObj = {
+                                "curso": "UDC5594",
+                                "recurso": "Actividad 3",
+                                "calificacion": points,
+                                "retro": "No sólo sobrevivió 500 años",
+                                "url": "https://www.w3schools.com/html/html_attributes.asp",
+                                "usuario": "vmedina@ucol.mx"
+                              }
+                            console.log(JSON.stringify(jsonObj));
+
+                            postData(APIUrl, jsonObj)
+                            .then(result => console.log(result))
+                            .catch(error => console.log('error', error));
+                        }
+
+                        if (e == r.getInternalIdSlideToGo('LAST_PAGE')){
+                            sendData();
+
+                        }
+                        
                         !n.isAnimating && e !== n.currentLocation && Fi(e, n.visibleSlides) && (n.goToSlide(e), i.push("/".concat(e)))
                     }, r.sendEventToAnalytics = function (e, t) {
                         var n = r.props.viewStore,
@@ -51131,13 +51183,33 @@
                                 blocked: S
                             })
                         })), p.map((function (t) {
-                            return !t.isOuter && i.a.createElement(zi, {
-                                key: t.Id,
-                                dataItem: t,
-                                contentAction: e.contentAction,
-                                blocked: S,
-                                disableTitles: O
-                            })
+                            let removeItems = [
+                                'e998166a-3352-4a11-8c29-422e49e51863',
+                                '54d4ac08-7e0b-4db6-b364-aaa9f3c7181d',
+                                '199c6a54-7596-471d-93c7-4074e539eeab',
+                                'ebcb0b38-b263-4058-9934-37072937ab69',
+                                '4637d90c-d5a3-4172-91a7-d9a6962f8d3f',
+                                'c0f19dfb-007f-4a2c-92de-fca2bd2d0973',
+                                'e1d66829-fe83-477f-8dc4-d6d2fd93522a',
+                                'b93a360e-e8fa-474e-b769-6ff460605069',
+                                '07ebd7c0-05d3-4185-b266-53a248c79857',
+                                '2cf0819b-926f-4f27-b037-46f694efb1bd'
+                            ]
+
+                            console.log(t)
+                            console.log(e)
+                            if (!removeItems.includes(t.Id)) {
+                                return !t.isOuter && i.a.createElement(zi, {
+                                    key: t.Id,
+                                    dataItem: t,
+                                    contentAction: e.contentAction,
+                                    blocked: S,
+                                    disableTitles: O
+                                })
+                            } else {
+                                return
+                            }
+                            
                         })), f.map((function (t) {
                             return !t.isOuter && i.a.createElement(Gi, {
                                 key: t.Id,
@@ -55448,6 +55520,7 @@
                 }, i.a.createElement("div", {
                     className: "genially-view-pages-navigation-align-center"
                 }, d.map((function (e, t) {
+                    console.log(e + '\n' + t)
                     return i.a.createElement(bu, {
                         key: e.Id,
                         slide: e,
