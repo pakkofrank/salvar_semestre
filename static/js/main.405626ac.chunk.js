@@ -50943,19 +50943,19 @@
                             console.log(i);
 
                         async function postData(url = '', data = {}) {
-                            var myHeaders = new Headers();
+                            let myHeaders = new Headers();
                             myHeaders.append("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Mzc5NjA0MTEsImV4cCI6MTY0MDU1MjQxMSwidXNlckRhdGEiOnsiaWQiOiIxIn19.ibbDwE-szOqq-eQTFy2V1XGQc723--vXzQiLNu5cta0");
                             myHeaders.append("Content-Type", "application/json");
                             myHeaders.append("Cookie", "PHPSESSID=5768enb10orcmtimk223enmna4");
 
-                            var raw = JSON.stringify(data);
-
-                            var requestOptions = {
+                            let requestOptions = {
                             method: 'POST',
-                            headers: myHeaders,
-                            body: raw,
-                            redirect: 'follow',
-                            mode: 'cors'
+                            headers: {
+                                "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2Mzc5NjA0MTEsImV4cCI6MTY0MDU1MjQxMSwidXNlckRhdGEiOnsiaWQiOiIxIn19.ibbDwE-szOqq-eQTFy2V1XGQc723--vXzQiLNu5cta0",
+                                "Content-Type" : "application/json",
+                                "Cookie" : "PHPSESSID=5768enb10orcmtimk223enmna4",
+                            },
+                            body: JSON.stringify(data),
                             };
 
                             let res = await fetch("http://deveduc.ddns.net:88/api/cursos/alumnos/calificaciones", requestOptions)
